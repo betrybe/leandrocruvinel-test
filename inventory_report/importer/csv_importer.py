@@ -4,17 +4,15 @@ import csv
 
 
 class CsvImporter(Importer):
-    def __init__(self, path: str):
-        self.path = path
-
-    def import_data(self) -> List[Dict]:
-        if self.path[-4:] != ".csv":
-            raise TypeError("Arquivo deve ter formato .csv")
+    @staticmethod
+    def import_data(path) -> List[Dict]:
+        if path[-4:] != ".csv":
+            raise ValueError("Arquivo inválido")
 
         col_names = []
         products = []
 
-        with open(self.path, newline="") as csvfile:
+        with open(path, newline="") as csvfile:
             rows = csv.reader(csvfile, delimiter=",")
             for i, row in enumerate(rows):
 

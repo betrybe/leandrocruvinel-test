@@ -4,15 +4,13 @@ import json
 
 
 class JsonImporter(Importer):
-    def __init__(self, path: str):
-        self.path = path
+    @staticmethod
+    def import_data(path: str) -> List[Dict]:
 
-    def import_data(self) -> List[Dict]:
+        if path[-5:] != ".json":
+            raise ValueError("Arquivo inválido")
 
-        if self.path[-5:] != ".json":
-            raise TypeError("Arquivo deve ter formato .json")
-
-        f = open(self.path)
+        f = open(path)
         products = json.load(f)
         f.close()
 
