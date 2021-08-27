@@ -1,35 +1,62 @@
-from inventory_report.importer.json_importer import JsonImporter
+from typing import Dict, List
+
 from inventory_report.importer.csv_importer import CsvImporter
-from inventory_report.reports.simple_report import SimpleReport
+from inventory_report.importer.json_importer import JsonImporter
+from inventory_report.importer.xml_importer import XmlImporter
 from inventory_report.reports.complete_report import CompleteReport
+from inventory_report.reports.simple_report import SimpleReport
 
 
 class Inventory(object):
-    def __init__(self, path: str, option: str):
-        """Initializate object
+    @staticmethod
+    def load_data(path: str) -> List[Dict]:
+        """Load data from file
 
         Args:
-            path (str): path of file
-            option (str): "simples" or "completo"
+            path (str): The path to a file (csv, json and xml)
+
+        Returns:
+            List[Dict]: The data from file in list format
         """
-        self.path = path
-        self.option = option
 
-    def import_data(self) -> str:
+        if path[-4:] == ".csv":
+            loader = CsvImporter()
+            products = loader.import_data(path)
 
-        # !TODO
-        # recuperar os dados do arquivo
-        if self.path[-4:] == ".csv":
-            loader = CsvImporter(self.path)
-            products = loader.import_data()
+        elif path[-5:] == ".json":
+            loader = JsonImporter()
+            products = loader.import_data(path)
 
-        elif self.path[-5:] == ".json":
-            loader = JsonImporter(self.path)
-            products = loader.import_data()
+        elif path[-4:] == ".xml":
+            loader = XmlImporter()
+            products = loader.import_data(path)
+
+        return products
+
+    @classmethod
+    def import_data(
+        cls,
+        path: str,
+        option: str,
+    ) -> str:
+        """Generate a report from a data file
+
+        Args:
+            path (str): The path to a file (csv, json and xml)
+            option (str): "simples" or "completo"
+
+        Returns:
+            str: The report from data file
+        """
+
+        products = cls.load_data(path)
 
         # chamar o método de generate correspondente à entrada passada
-        if self.option == "simples":
+        if option == "simples":
             return SimpleReport.generate(products)
 
-        if self.option == "completo":
+        elif option == "completo":
             return CompleteReport.generate(products)
+
+        else:
+            raise ValueError("Opção inválida")
