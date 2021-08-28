@@ -9,5 +9,7 @@
         "-l 79"
     ],
     "python.formatting.provider": "black",
-    "editor.formatOnSave": true
+    // my settings
+    "editor.formatOnSave": true,
+    "editor.fontSize": 18
 }

@@ -21,15 +21,12 @@ class Inventory(object):
 
         if path[-4:] == ".csv":
             loader = CsvImporter()
-            products = loader.import_data(path)
-
         elif path[-5:] == ".json":
             loader = JsonImporter()
-            products = loader.import_data(path)
-
         elif path[-4:] == ".xml":
             loader = XmlImporter()
-            products = loader.import_data(path)
+
+        products = loader.import_data(path)
 
         return products
 
@@ -51,12 +48,10 @@ class Inventory(object):
 
         products = cls.load_data(path)
 
-        # chamar o método de generate correspondente à entrada passada
+        # generate report
         if option == "simples":
             return SimpleReport.generate(products)
-
         elif option == "completo":
             return CompleteReport.generate(products)
-
         else:
             raise ValueError("Opção inválida")
