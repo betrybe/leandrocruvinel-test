@@ -7,7 +7,6 @@ class InventoryIterator(Iterator):
         self._index = 0
 
     def __next__(self):
-
         if self._index < len(self._inventory.data):
             product = self._inventory.data[self._index]
         else:

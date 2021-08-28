@@ -22,6 +22,18 @@ class InventoryRefactor:
         path: str,
         option: str,
     ) -> str:
+        """Import data and generate report
+
+        Args:
+            path (str): Path of file (csv, json or xml)
+            option (str): "simples" or "completo"
+
+        Raises:
+            ValueError: If an invalid file, raise value error
+
+        Returns:
+            str: The formatted report
+        """
 
         loader = self.importer()
 
