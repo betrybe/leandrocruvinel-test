@@ -8,5 +8,8 @@
     "python.formatting.blackArgs": [
         "-l 79"
     ],
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "black",
+    // my settings
+    "editor.formatOnSave": true,
+    "editor.fontSize": 18
 }
